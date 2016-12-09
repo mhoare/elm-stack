@@ -1,12 +1,14 @@
 {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "summary": "A package which implements a Stack",
     "repository": "https://github.com/mhoare/elm-stack.git",
     "license": "BSD3",
     "source-directories": [
         "src"
     ],
-    "exposed-modules": ["Stack"],
+    "exposed-modules": [
+        "Stack"
+    ],
     "dependencies": {
         "elm-lang/core": "5.0.0 <= v < 6.0.0",
         "elm-lang/html": "2.0.0 <= v < 3.0.0"
