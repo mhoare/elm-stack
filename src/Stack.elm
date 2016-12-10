@@ -5,73 +5,67 @@ module Stack exposing (initialise, push, pop, toList, Stack)
 # Definition
 @docs Stack
 
+# Initialisation
+@docs initialise
+
 # Common Helpers
-@docs initialise, pop, push, toList
+@docs pop, push, toList
 
 -}
 
-import Array exposing (..)
 
-
-{-|
-        The Stack type uses an array to represent the stack.
--}
+{-| -}
 type Stack a
-    = Stack
-        { data : Array a
-        , top : Int
-        , default : a
-        }
+    = Stack (List a)
 
 
-defaultFromStack : Stack (Maybe a) -> Maybe a
-defaultFromStack (Stack { default }) =
-    default
+{-| Initialise an empty stack.
+-}
+initialise : Stack a
+initialise =
+    Stack []
 
 
 {-| Convert a Stack type to a list data type
 -}
-toList : Stack (Maybe a) -> List (Maybe a)
-toList (Stack { data }) =
-    Array.toList data
+toList : Stack a -> List a
+toList (Stack stack) =
+    stack
 
 
-{-|
-        Initialises a stack given an initialisation value and a stack size.
-
+{-| Pushes an item onto the stack and returns the new stack. The item must be of the same type as the stack.
 -}
-initialise : a -> Int -> Stack a
-initialise t size =
-    Stack
-        { data = Array.initialize size (always t)
-        , top = 0
-        , default = t
-        }
-
-
-{-|
-        Pushes an item onto the stack and returns the new stack. The item must be of the same type as the stack.
--}
-push : a -> Stack (Maybe a) -> Stack (Maybe a)
-push item ((Stack { top, data }) as stack) =
-    if Array.length data /= top then
-        Stack { data = Array.set top (Just item) data, top = top + 1, default = defaultFromStack stack }
+push : a -> Stack a -> Stack a
+push item (Stack stack) =
+    if List.length stack /= 0 then
+        Stack (item :: stack)
     else
-        stack
+        Stack stack
 
 
-{-|
-        Removes the item at the top of the stack and returns it as the first item of a tuple.
+{-| Removes the item at the top of the stack and returns it as the first item of a tuple.
 -}
-pop : Stack (Maybe a) -> ( Maybe a, Stack (Maybe a) )
-pop ((Stack { data, top }) as stack) =
+pop : Stack a -> ( Maybe a, Stack a )
+pop (Stack stack) =
     let
         item =
-            Array.get (top - 1) data
+            List.head stack
+
+        tail =
+            List.tail stack
     in
         case item of
             Nothing ->
-                ( Nothing, stack )
+                ( Nothing, Stack stack )
 
             Just item ->
-                ( item, Stack { data = Array.set (top - 1) Nothing data, top = (top - 1), default = defaultFromStack stack } )
+                let
+                    newstack =
+                        case tail of
+                            Nothing ->
+                                []
+
+                            Just tail ->
+                                tail
+                in
+                    ( Just item, Stack newstack )
