@@ -1,4 +1,4 @@
-module Stack exposing (initialise, push, pop, Stack)
+module Stack exposing (initialise, push, pop, toList, Stack)
 
 {-| This library implements a stack data structure in Elm, allowing you to worry more about your business logic and less about implementing common adts.
 
@@ -6,7 +6,7 @@ module Stack exposing (initialise, push, pop, Stack)
 @docs Stack
 
 # Common Helpers
-@docs initialise, pop, push
+@docs initialise, pop, push, toList
 
 -}
 
@@ -27,6 +27,13 @@ type Stack a
 defaultFromStack : Stack (Maybe a) -> Maybe a
 defaultFromStack (Stack { default }) =
     default
+
+
+{-| Convert a Stack type to a list data type
+-}
+toList : Stack (Maybe a) -> List (Maybe a)
+toList (Stack { data }) =
+    Array.toList data
 
 
 {-|
