@@ -16,11 +16,17 @@ import Array exposing (..)
 {-|
         The Stack type uses an array to represent the stack.
 -}
-type alias Stack a =
-    { data : Array a
-    , top : Int
-    , default : a
-    }
+type Stack a
+    = Stack
+        { data : Array a
+        , top : Int
+        , default : a
+        }
+
+
+defaultFromStack : Stack (Maybe a) -> Maybe a
+defaultFromStack (Stack { default }) =
+    default
 
 
 {-|
@@ -29,19 +35,20 @@ type alias Stack a =
 -}
 initialise : a -> Int -> Stack a
 initialise t size =
-    { data = Array.initialize size (always t)
-    , top = 0
-    , default = t
-    }
+    Stack
+        { data = Array.initialize size (always t)
+        , top = 0
+        , default = t
+        }
 
 
 {-|
         Pushes an item onto the stack and returns the new stack. The item must be of the same type as the stack.
 -}
 push : a -> Stack (Maybe a) -> Stack (Maybe a)
-push item stack =
-    if Array.length stack.data /= stack.top then
-        { stack | data = Array.set stack.top (Just item) stack.data, top = stack.top + 1 }
+push item ((Stack { top, data }) as stack) =
+    if Array.length data /= top then
+        Stack { data = Array.set top (Just item) data, top = top + 1, default = defaultFromStack stack }
     else
         stack
 
@@ -50,14 +57,14 @@ push item stack =
         Removes the item at the top of the stack and returns it as the first item of a tuple.
 -}
 pop : Stack (Maybe a) -> ( Maybe a, Stack (Maybe a) )
-pop stack =
+pop ((Stack { data, top }) as stack) =
     let
         item =
-            Array.get (stack.top - 1) stack.data
+            Array.get (top - 1) data
     in
         case item of
             Nothing ->
                 ( Nothing, stack )
 
             Just item ->
-                ( item, { stack | data = Array.set (stack.top - 1) Nothing stack.data, top = (stack.top - 1) } )
+                ( item, Stack { data = Array.set (top - 1) Nothing data, top = (top - 1), default = defaultFromStack stack } )

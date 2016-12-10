@@ -6,4 +6,6 @@ Any issues which are noticed please open a [Github issue][issues] and I will sor
 
 [issues]: https://github.com/mhoare/elm-stack/issues
 
+## Changes
 
+2.0.0: Replace type alias of `Stack` with opaque type `Stack`
