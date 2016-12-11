@@ -6,6 +6,12 @@ Any issues which are noticed please open a [Github issue][issues] and I will sor
 
 [issues]: https://github.com/mhoare/elm-stack/issues
 
-## Changes
+## Example
 
+To see an example of how the elm-stack module is used visit [elm-stack.surge.sh][example]
+
+[example]: https://elm-stack.surge.sh
+
+## Changes
+3.0.0: Change stack type to use List
 2.0.0: Replace type alias of `Stack` with opaque type `Stack`
