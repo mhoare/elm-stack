@@ -40,6 +40,13 @@ push item (Stack stack) =
     Stack (item :: stack)
 
 
+{-| Returns the top element of the stack without removing it.
+-}
+top : Stack a -> Maybe a
+top (Stack stack) =
+    List.head stack
+
+
 {-| Removes the item at the top of the stack and returns it as the first item of a tuple.
 -}
 pop : Stack a -> ( Maybe a, Stack a )
