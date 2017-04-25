@@ -51,25 +51,9 @@ top (Stack stack) =
 -}
 pop : Stack a -> ( Maybe a, Stack a )
 pop (Stack stack) =
-    let
-        item =
-            List.head stack
+    case stack of
+        [] ->
+            ( Nothing, Stack [] )
 
-        tail =
-            List.tail stack
-    in
-        case item of
-            Nothing ->
-                ( Nothing, Stack stack )
-
-            Just item ->
-                let
-                    newstack =
-                        case tail of
-                            Nothing ->
-                                []
-
-                            Just tail ->
-                                tail
-                in
-                    ( Just item, Stack newstack )
+        head :: tail ->
+            ( Just head, Stack tail )
