@@ -13,6 +13,7 @@ To see an example of how the elm-stack module is used visit [elm-stack.surge.sh]
 [example]: https://elm-stack.surge.sh
 
 ## Changes
+3.1.2: Elm 0.19
 3.0.0: Change stack type to use List
 
 2.0.0: Replace type alias of `Stack` with opaque type `Stack`
