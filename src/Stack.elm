@@ -1,14 +1,24 @@
-module Stack exposing (initialise, push, pop, toList, top, Stack)
+module Stack exposing
+    ( Stack
+    , initialise
+    , pop, push, toList, top
+    )
 
 {-| This library implements a stack data structure in Elm, allowing you to worry more about your business logic and less about implementing common adts.
 
+
 # Definition
+
 @docs Stack
 
+
 # Initialisation
+
 @docs initialise
 
+
 # Common Helpers
+
 @docs pop, push, toList, top
 
 -}
